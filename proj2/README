@@ -1,0 +1,11 @@
+Implemented shared memory producer/consumer problem in C using semaphores
+.c and .h files are in code directory
+mainProgram.c is the file that has the main(). It does the following:
+	1. Creates three queues
+	2. Creates reader, munch1, munch2 and writer threads
+	3. Waits for the threads to terminate and then prints queue statistics and exits
+Queue.c handles synchronized queue operations
+reader.c handles operations to be performed by reader thread
+munch1.c handles operations to be performed by munch1 thread
+munch2.c handles operations to be performed by munch2 thread
+writer.c handles operations to be performed by writer thread
