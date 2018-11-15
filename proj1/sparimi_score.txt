@@ -1,0 +1,159 @@
+Student NETID: sparimi
+Partner NETID: nhariharan
+
+TOTAL_SCORE: 10/10
+============================================================
+SECTION 1: STRUCTURE (4 pt)
+
+SECTION_1_SCORE: 4/4
+============================================================
+1] DIRECTORY ORGANIZATION (1 pt)
+	- Does the project have a makefile, README,
+	  with separate compilation of .c files?
+
+	YES: 1 PTs
+	NO:  0 PTs
+	
+1_1_QUESTION_SCORE: 1/1
+
+2] CODE STRUCTURE (2 pt)
+	a)
+	- Is code broken into multiple .c, .h files logically?
+
+	b)
+	- Does each .c files encapsulate a logical part of code/data structure?
+	- Does each .h file act as a minimal interface to functions, structs in .c file?
+	
+	Score - 0 if only one .c file (neither a nor b)     
+	      - 1 if multiple .c, .h files (a only)
+	      - 2 if multiple .c, .h files with well-structured headers
+		  and logical breakdown of code (a and b)
+	
+1_2_QUESTION_SCORE: 2/2
+
+3] C CODING PRACTICES(1 pt)
+	a) Does code check errors in system calls (malloc, etc)?
+	b) Does code define constants using #define or constants, instead of
+		magic numbers embedded in code?
+	
+	Score - 0 if only (a or b or neither)
+		1 if (a and b)
+	
+1_3_QUESTION_SCORE: 1/1
+============================================================
+SECTION 2: PROGRAM BEHAVIOR (6 pt)
+
+SECTION_2_SCORE: 5.5/6
+============================================================
+1] PARSING /proc DIRECTORY (2 pt)
+	TEST CASES:
+	a)	Input: 537ps
+		Output: For each pid belonging to the user,
+			print at least the pid of each process
+			(Emphasis here on also checking that the
+			 uid of the user matches the uid in /proc/[pid]/status)
+
+	b)	Input: 537ps -p <valid pid>
+		Output: Print at least the pid belonging to <valid pid>
+
+	c)	Input: 537ps -p <pid for process that does not exist>
+		Output: Print a descriptive error message, and exit.
+
+	Score - 1 point for (a)
+	      - 1 point for (b and c)
+	      - 2 points for (a, b, and c)
+
+2_1_QUESTION_SCORE: 2/2
+
+2] BASIC OPTIONS PROCESSING (1 pt)
+	NOTE: For this section, don't be concerned if the values of
+		state, utime, systime, vmem, command line are correct;
+		look only for if they are included or excluded in the output
+
+	TEST CASES:
+	a)	Input: 537ps -s -U -S -v -c
+		Output: For each pid belonging to the user, print:
+		pid: state usertime systime virtual_memory [command line]
+
+	b)	Input: 537ps -s- -U- -S- -v- -c-
+		Output: For each pid belonging to the user, print:
+		pid:
+
+	c)	Input: 537ps -s -U- -S -v -c-
+		Output: For each pid belonging to the user, print:
+		pid: state systime virtual_memory
+
+	d)	Input: 537ps
+		Output: For each pid belonging to the user, print:
+		pid: usertime [command line]
+
+	e)	Input: 537ps -p -s -S
+		Output: Descriptive Error Message for No Argument Provided to -p
+
+	Score - 1 point for (a and b and c and d and e)
+	
+2_2_QUESTION_SCORE: 1/1 [Segmentation fault in (a)]
+	
+3] PARSING stat, statm, cmdline FILES (2 pt)
+	NOTE: For this section, we are looking for correct values of
+		state, Utime, Systime, virtual memory, and command line
+	
+	TEST CASES:
+	a)	Input: 537ps -s -U -S -v -c-
+		Output: For each pid belonging to the user, print:
+		pid: state systime virtual_memory
+
+	b)	Input: 537ps -s- -U- -S- -v- -c
+		Output: For each pid belonging to the user, print:
+		pid [command line]
+
+	Score - 1 point for (a) - parsing stat, statm
+		1 point for (b) - parsing cmdline
+		2 points for (a and b)
+
+2_3_QUESTION_SCORE: 2/2
+
+4] ADVANCED OPTIONS PROCESSING
+	TEST CASES:
+	
+	a)	Input: 537ps -s -S -V
+		Output: Descriptive Error Message for
+			Invalid Flag Provided (-V)
+	
+	b)	Input: 537ps -s -S -U?
+		Output: Descriptive Error Message for Invalid flag/argument -U?
+
+	c)	Input: 537ps foo bar baz -s -S -U
+		Output: Descriptive Error Message for invalid arguments provided
+
+	d)	Input: 537ps -s -s- -v
+		Output: One of the following cases
+    			- Descriptive Error Message Stating that duplicate flags have been provided, invalid
+    			- Ignore second -s flag and use the first; printing all processes belonging to the user of the form
+     			 pid: state usertime virtual_memory [command line]
+    			- Ignore first -s flag and use the first; printing all processes belonging to the user of the form
+     			 pid: state usertime stime virtual_memory [command line]
+	
+	e)	Input: 537ps -p [Valid User Process 1] -p [Valid User Process 2] -s
+		Output: One of the following cases
+    			- Descriptive Error Message Stating that duplicate flags have been provided, invalid
+    			- Use the first instance of -p, throw away the second, to receive an output of the form
+    			  pid: state usertime [command line]
+			- Use the second instance of -p, throw away the first, to receive an output of the form
+    			  pid: state usertime [command line]
+			- Print both processes, in the form
+      			pid: state usertime [command line]
+	
+	Score - 1 point for (a and b and c and d and e)
+
+2_4_QUESTION_SCORE: 1/1
+
+NOTES ON SCORING THIS SECTION:
+	If student lists ALL processes in /proc without checking the uid
+	in the status file, only take off points in part 1-a.
+	
+	In section 2, look for the presence of the correct output fields, but
+	the values of these fields do not necessarily have to be correct.
+	For example, if the incorrect [command line] is printed in a given
+	process, do not take off points for this.
+	Points can be deducted for this in section 3.

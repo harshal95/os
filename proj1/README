@@ -1,0 +1,10 @@
+Implemented ps command in C
+
+option_processor.c is the C file with main(). It calls the other modules:
+
+1. read_options.c to get user input
+2. get_proc.c to read a process under /proc directory and add it to a linkedlist3. info_parser.c reads the stat and statm file for every process and displays the output
+
+node_structs.h contains structs needed for storing and accessing process information
+Used getopt to parse options from user
+Used readdir to read /proc directory
