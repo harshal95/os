@@ -1,0 +1,26 @@
+Implemented make in C
+
+main.c is the C file with main() . It calls the following:
+1.text_parsing.c : Parses the makefile. Calls the following :
+	1. build_spec_repr.c : Creates,updates and accesses build_specification
+2.build_spec_graph.c : Creates,traverses and evaluates the graph. Calls the following:
+	1. proc_creation_prog_exe.c : Executes commands in new process.
+
+Changes made to code to fix valgrind errors:
+1.(build_spec_repr.c, 19) - changed node allocation from malloc to calloc in the first line of the function createNodeSpec to fix valgrind error- Conditional jump or move depends on uninitialised value(s).
+
+2. Included extra functions for freeing data(without free-- got memory leak errors)
+(build_spec_repr.c, 42) - function for freeing command strings
+(build_spec_repr.c, 54) - function for freeing a node
+(build_spec_repr.c, 163) - function for freeing build specs
+
+3.(build_spec_graph.c, 43) - storing dependency nodes in the linked list maintained for build specs so that freeing memory becomes simpler.
+
+4.(build_spec_graph.c, 61) - creating separate string for storing dependency name so that freeing memory becomes simpler.
+
+5.(build_spec_graph.c, 172) - function for clearing the dependency pointers so that memory can be freed by just accessing the build spec nodes in the linked list.
+
+6.(main.c, 92-94) - calling functions for freeing up memory related to graph nodes and array of strings. Commenting out these lines will throw valgrind errors for memory leak. We have included the free function calls to prove that all non-permanent mallocs have been matched with frees. The lines 92-94 comprise the memory blocks that does not need to be freed before exit.
+
+The output report valgrind.txt was obtained by running 537make on itself. We got similar outputs while running valgrind on other testcases.   
+ 

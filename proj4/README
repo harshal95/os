@@ -1,0 +1,22 @@
+Implemented the following in C :
+
+1.malloc537
+2.free537
+3.realloc537
+4.memcheck537
+
+There are 2 .c files
+1. 537malloc.c : contains malloc537,free537,memcheck537 and realloc537
+
+2. 537tree.c : contains range tree structure and operations related to it(insert,delete,create,searchOverlap)
+
+There are 2 .h files
+
+1.537malloc.h : contains definition of malloc537,free537,memcheck537 and realloc537
+2.537tree.h : contains Range tree Node structure definition and operations
+
+Also included is a Makefile.
+
+These are the sources used:
+Citation : https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+https://www.geeksforgeeks.org/avl-tree-set-2-deletion/
